@@ -48,10 +48,6 @@
       transform: scale(1.05);
     }
 
-    a {
-      text-decoration: none;
-    }
-
     .background {
       position: absolute;
       bottom: 0;
@@ -124,23 +120,31 @@
   <h1>Do you wanna play a game with me?</h1>
 
   <div class="buttons">
-    <a href="welcome.html">
-      <button>Yes</button>
-    </a>
-    <button onclick="openNameModal()">No</button>
+    <button onclick="openYesModal()">Yes</button>
+    <button onclick="openNoModal()">No</button>
   </div>
 
   <div class="background">
     <div class="scene">Made by dummer! 🎮</div>
   </div>
 
-  <!-- Modal for "No" -->
-  <div class="modal" id="nameModal">
+  <!-- Yes Modal -->
+  <div class="modal" id="yesModal">
     <div class="modal-content">
-      <h2>Enter your name:</h2>
-      <input type="text" id="nameInput" placeholder="Your Name" />
+      <h2>Awesome! What's your name?</h2>
+      <input type="text" id="yesNameInput" placeholder="Enter your name" />
       <br />
-      <button onclick="showThankYouModal()">Submit</button>
+      <button onclick="goToWelcome()">Enter</button>
+    </div>
+  </div>
+
+  <!-- No Modal -->
+  <div class="modal" id="noModal">
+    <div class="modal-content">
+      <h2>Maybe later! What's your name?</h2>
+      <input type="text" id="noNameInput" placeholder="Your name" />
+      <br />
+      <button onclick="thankYou()">Submit</button>
     </div>
   </div>
 
@@ -148,27 +152,43 @@
   <div class="modal" id="thankYouModal">
     <div class="modal-content">
       <h2>No Problem, Thank You Always 😊</h2>
-      <button onclick="closeThankYouModal()">Close</button>
+      <button onclick="closeAllModals()">Close</button>
     </div>
   </div>
 
   <script>
-    function openNameModal() {
-      document.getElementById("nameModal").style.display = "flex";
+    function openYesModal() {
+      document.getElementById("yesModal").style.display = "flex";
     }
 
-    function showThankYouModal() {
-      const name = document.getElementById("nameInput").value.trim();
+    function openNoModal() {
+      document.getElementById("noModal").style.display = "flex";
+    }
+
+    function closeAllModals() {
+      document.getElementById("yesModal").style.display = "none";
+      document.getElementById("noModal").style.display = "none";
+      document.getElementById("thankYouModal").style.display = "none";
+    }
+
+    function goToWelcome() {
+      const name = document.getElementById("yesNameInput").value.trim();
       if (name === "") {
         alert("Please enter your name!");
         return;
       }
-      document.getElementById("nameModal").style.display = "none";
-      document.getElementById("thankYouModal").style.display = "flex";
+      // You can pass the name in the URL as a parameter (optional)
+      window.location.href = "welcome.html?name=" + encodeURIComponent(name);
     }
 
-    function closeThankYouModal() {
-      document.getElementById("thankYouModal").style.display = "none";
+    function thankYou() {
+      const name = document.getElementById("noNameInput").value.trim();
+      if (name === "") {
+        alert("Please enter your name!");
+        return;
+      }
+      document.getElementById("noModal").style.display = "none";
+      document.getElementById("thankYouModal").style.display = "flex";
     }
 
     // Hookdeck logging
@@ -184,17 +204,6 @@
     })
     .then(() => console.log("Visitor logged to Hookdeck"))
     .catch(err => console.error("Visitor logging failed", err));
-
-    // Optional: Load meta.json
-    fetch("https://01hacker01.github.io/wanna-play/meta.json")
-      .then(response => {
-        if (!response.ok) throw new Error("meta.json not found");
-        return response.json();
-      })
-      .then(data => {
-        console.log("meta.json loaded:", data);
-      })
-      .catch(err => console.warn("meta.json fetch failed:", err));
   </script>
 </body>
 </html>
