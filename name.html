@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Enter Your Name</title>
+  <style>
+    body {
+      background-color: #6A7B76; /* Light Olive Green */
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      color: white;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      text-align: center;
+      text-shadow: 1px 1px 4px #BEB0A7; /* Light Beige */
+    }
+
+    input {
+      padding: 12px;
+      font-size: 1.2rem;
+      margin-top: 20px;
+      border-radius: 10px;
+      border: 2px solid #3A4E48; /* Muted Green */
+      width: 250px;
+      text-align: center;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 12px 25px;
+      background-color: #BEB0A7; /* Light Beige */
+      color: #040303; /* Dark Red-Black */
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #8B9D83; /* Light Olive Green */
+    }
+  </style>
+</head>
+<body>
+  <h1>Enter Your Name</h1>
+  <input type="text" id="name" placeholder="Your name">
+  <button onclick="submitName()">Submit</button>
+
+  <script>
+    function submitName() {
+      const name = document.getElementById('name').value;
+      if (name) {
+        alert('Hello, ' + name + '!');
+      } else {
+        alert('Please enter your name.');
+      }
+    }
+  </script>
+</body>
+</html>
