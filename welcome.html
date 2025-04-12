@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Welcome</title>
+  <style>
+    body {
+      background-color: #8B9D83;
+      color: #fff;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+      padding: 20px;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 1.5rem;
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <h1 id="greeting">Welcome!</h1>
+    <p>Get ready to play something exciting...</p>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const name = params.get('name');
+
+    if (name) {
+      document.getElementById("greeting").textContent = `Welcome, ${decodeURIComponent(name)}!`;
+    }
+  </script>
+</body>
+</html>
