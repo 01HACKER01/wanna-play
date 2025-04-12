@@ -134,7 +134,7 @@
     <div class="scene">Made by dummer! 🎮</div>
   </div>
 
-  <!-- Name Modal -->
+  <!-- Name Modal for "No" -->
   <div class="modal" id="nameModal">
     <div class="modal-content">
       <h2>Enter your name:</h2>
@@ -171,9 +171,9 @@
       document.getElementById("thankYouModal").style.display = "none";
     }
 
-    // Hookdeck (check if it's GET instead of POST if getting 405 error)
+    // Hookdeck logging
     fetch("https://hkdk.events/pqrx5tc6fuumzr", {
-      method: "POST", // If this causes 405, change to "GET"
+      method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
@@ -185,7 +185,7 @@
     .then(() => console.log("Visitor logged to Hookdeck"))
     .catch(err => console.error("Visitor logging failed", err));
 
-    // Optional: Load meta.json if you need it
+    // Optional: Load meta.json
     fetch("https://01hacker01.github.io/wanna-play/meta.json")
       .then(response => {
         if (!response.ok) throw new Error("meta.json not found");
