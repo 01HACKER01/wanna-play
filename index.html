@@ -20,14 +20,14 @@
     }
 
     h1 {
-      font-size: 7rem;
+      font-size: 3rem;
       text-align: center;
       text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
       z-index: 2;
     }
 
     .buttons {
-      margin-top: 75px;
+      margin-top: 25px;
       z-index: 2;
     }
 
@@ -62,7 +62,7 @@
     }
 
     .scene {
-      font-size: 4rem;
+      font-size: 1.5rem;
       color: #BEB0A7;
       text-align: right;
       font-weight: bold;
@@ -205,5 +205,58 @@
     .then(() => console.log("Visitor logged to Hookdeck"))
     .catch(err => console.error("Visitor logging failed", err));
   </script>
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-analytics.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+  
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+      apiKey: "AIzaSyCQY93tarzia2pVn05wC4jqZOp35BKQ2Qs",
+      authDomain: "mygamedata-16a84.firebaseapp.com",
+      projectId: "mygamedata-16a84",
+      storageBucket: "mygamedata-16a84.firebasestorage.app",
+      messagingSenderId: "306931455896",
+      appId: "1:306931455896:web:f4f54e207b5ab45a7ebded",
+      measurementId: "G-R2CQ70G7JD"
+    };
+  
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+  </script>
+  <script>
+    // When user enters the page
+    const userId = "user_" + Date.now(); // create a random user ID
+  
+    firebase.database().ref('visitors/' + userId).set({
+      enteredAt: new Date().toString()
+    });
+  
+    // When user submits a form or name
+    function saveUserName(name) {
+      firebase.database().ref('visitors/' + userId).update({
+        name: name
+      });
+    }
+  
+    // When a button is clicked
+    function logButtonClick(buttonName) {
+      firebase.database().ref('visitors/' + userId + '/clicks').push({
+        button: buttonName,
+        time: new Date().toString()
+      });
+    }
+  
+    // When user leaves the page
+    window.addEventListener("beforeunload", function () {
+      firebase.database().ref('visitors/' + userId).update({
+        leftAt: new Date().toString()
+      });
+    });
+  </script>  
 </body>
 </html>
