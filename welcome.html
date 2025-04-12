@@ -5,39 +5,68 @@
   <title>Welcome</title>
   <style>
     body {
-      background-color: #8B9D83;
-      color: #fff;
+      background-color: #F8C8DC;
+      color: white;
       font-family: 'Comic Sans MS', cursive, sans-serif;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
+      margin: 0;
+      flex-direction: column;
       text-align: center;
-      padding: 20px;
+      background-image: linear-gradient(to bottom, #fbb1c9, #fbb1d4);
     }
 
     h1 {
       font-size: 3rem;
-      margin-bottom: 20px;
+      margin-bottom: 10px;
+      text-shadow: 2px 2px #ff7cae;
     }
 
     p {
       font-size: 1.5rem;
     }
+
+    .start-btn {
+      margin-top: 30px;
+      padding: 12px 30px;
+      background-color: white;
+      color: #d94f85;
+      font-weight: bold;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    .start-btn:hover {
+      background-color: #ffd0e5;
+      transform: scale(1.05);
+    }
   </style>
 </head>
 <body>
-  <div>
-    <h1 id="greeting">Welcome!</h1>
-    <p>Get ready to play something exciting...</p>
-  </div>
+  <h1 id="welcomeHeading">Choose Truth or Dare!</h1>
+  <p>Let's have some fun together!</p>
+  <button class="start-btn" onclick="startGame()">Start</button>
 
   <script>
-    const params = new URLSearchParams(window.location.search);
-    const name = params.get('name');
+    function getNameFromURL() {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get('name') || '';
+    }
 
+    function startGame() {
+      alert("Game starting soon... Stay tuned!");
+      // You can redirect to the actual game page here if needed
+    }
+
+    const name = getNameFromURL();
     if (name) {
-      document.getElementById("greeting").textContent = `Welcome, ${decodeURIComponent(name)}!`;
+      document.getElementById("welcomeHeading").textContent = `Choose Truth or Dare, ${name}!`;
     }
   </script>
 </body>
