@@ -227,36 +227,29 @@
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
   const analytics = getAnalytics(app);
-</script>
-  <script>
-    // When user enters the page
-    const userId = "user_" + Date.now(); // create a random user ID
-  
-    firebase.database().ref('visitors/' + userId).set({
-      enteredAt: new Date().toString()
-    });
-  
-    // When user submits a form or name
-    function saveUserName(name) {
-      firebase.database().ref('visitors/' + userId).update({
-        name: name
-      });
+
+ // ✅ Ask for Name
+  let userName = localStorage.getItem("userName");
+  if (!userName) {
+    userName = prompt("Enter your name:");
+    if (!userName || userName.trim() === "") {
+      userName = "Anonymous_" + Math.floor(Math.random() * 1000);
     }
-  
-    // When a button is clicked
-    function logButtonClick(buttonName) {
-      firebase.database().ref('visitors/' + userId + '/clicks').push({
-        button: buttonName,
-        time: new Date().toString()
-      });
-    }
-  
-    // When user leaves the page
-    window.addEventListener("beforeunload", function () {
-      firebase.database().ref('visitors/' + userId).update({
-        leftAt: new Date().toString()
-      });
-    });
-  </script>  
+    localStorage.setItem("userName", userName);
+  }
+
+  const userId = "user_" + Date.now();
+
+  // ✅ Get the question text from page
+  const questionText = document.getElementById("questionBox").innerText;
+
+  // ✅ Save to Firebase
+  firebase.database().ref("visitors/" + userId).set({
+    name: userName,
+    question: questionText,
+    type: "Truth",
+    time: new Date().toString()
+  });
+</script> 
 </body>
 </html>
