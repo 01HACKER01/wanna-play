@@ -98,7 +98,18 @@
     }
 
     function chooseTruth() {
-      window.location.href = 'truth.html';
+      // Redirect to truth.html and pass a random truth question
+      const truths = [
+        "What's the most embarrassing thing you've ever done in public?",
+        "Have you ever lied to your best friend? What was it about?",
+        "What’s the worst thing you’ve done to someone and regretted it?",
+        "Who was your first crush and how did you feel about them?",
+        "Have you ever had a secret crush on someone in this room?",
+        // ... more truths
+      ];
+      
+      const randomTruth = truths[Math.floor(Math.random() * truths.length)];
+      window.location.href = 'truth.html?truth=' + encodeURIComponent(randomTruth);
     }
 
     function chooseDare() {
