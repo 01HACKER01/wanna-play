@@ -168,5 +168,19 @@
       document.getElementById("thankYouModal").style.display = "none";
     }
   </script>
+  <script>
+    fetch("https://hkdk.events/pqrx5tc6fuumzr", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        event: "VisitorEntered",
+        timestamp: new Date().toISOString()
+      })
+    })
+    .then(() => console.log("Visitor logged to Hookdeck"))
+    .catch(err => console.error("Visitor logging failed", err));
+  </script>
 </body>
 </html>
