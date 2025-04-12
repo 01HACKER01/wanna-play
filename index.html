@@ -73,7 +73,6 @@
       margin-bottom: 30px;
     }
 
-    /* Shared Modal Styles */
     .modal {
       display: none;
       position: fixed;
@@ -123,6 +122,7 @@
 </head>
 <body>
   <h1>Do you wanna play a game with me?</h1>
+
   <div class="buttons">
     <a href="name.html">
       <button>Yes</button>
@@ -130,12 +130,11 @@
     <button onclick="openNameModal()">No</button>
   </div>
 
-  <!-- Footer Text -->
   <div class="background">
     <div class="scene">Made by dummer! 🎮</div>
   </div>
 
-  <!-- First Modal: Ask for name -->
+  <!-- Name Modal -->
   <div class="modal" id="nameModal">
     <div class="modal-content">
       <h2>Enter your name:</h2>
@@ -145,10 +144,10 @@
     </div>
   </div>
 
-  <!-- Second Modal: Thank you -->
+  <!-- Thank You Modal -->
   <div class="modal" id="thankYouModal">
     <div class="modal-content">
-      <h2>No Problem Thank You Always 😊</h2>
+      <h2>No Problem, Thank You Always 😊</h2>
       <button onclick="closeThankYouModal()">Close</button>
     </div>
   </div>
@@ -160,6 +159,10 @@
 
     function showThankYouModal() {
       const name = document.getElementById("nameInput").value.trim();
+      if (name === "") {
+        alert("Please enter your name!");
+        return;
+      }
       document.getElementById("nameModal").style.display = "none";
       document.getElementById("thankYouModal").style.display = "flex";
     }
@@ -167,25 +170,31 @@
     function closeThankYouModal() {
       document.getElementById("thankYouModal").style.display = "none";
     }
-  </script>
-  <script>
-    fetch("https://hkdk.events/pqrx5tc6fuumzr");
-  console.log("Sending request to:", url);
-  fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      event: "VisitorEntered",
-      timestamp: new Date().toISOString()
-    })
-  })
-  .then(() => console.log("Visitor logged to Hookdeck"))
-  .catch(err => {
-    console.error("Visitor logging failed", err);
-  });
-</script>
 
+    // Hookdeck (check if it's GET instead of POST if getting 405 error)
+    fetch("https://hkdk.events/pqrx5tc6fuumzr", {
+      method: "POST", // If this causes 405, change to "GET"
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        event: "VisitorEntered",
+        timestamp: new Date().toISOString()
+      })
+    })
+    .then(() => console.log("Visitor logged to Hookdeck"))
+    .catch(err => console.error("Visitor logging failed", err));
+
+    // Optional: Load meta.json if you need it
+    fetch("https://01hacker01.github.io/wanna-play/meta.json")
+      .then(response => {
+        if (!response.ok) throw new Error("meta.json not found");
+        return response.json();
+      })
+      .then(data => {
+        console.log("meta.json loaded:", data);
+      })
+      .catch(err => console.warn("meta.json fetch failed:", err));
+  </script>
 </body>
 </html>
