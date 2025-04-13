@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Choose Your Challenge</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    /* Button fix styles */
+    .game-choice-btn {
+      display: inline-block;
+      padding: 12px 30px;
+      margin: 10px;
+      text-decoration: none;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1 id="welcomeHeading">Choose Truth or Dare</h1>
+  
+  <div class="button-group">
+    <a href="truth.html" class="btn btn-game game-choice-btn">Truth</a>
+    <a href="dare.html" class="btn btn-game game-choice-btn">Dare</a>
+  </div>
+
+  <div class="footer">
+    <div class="footer-text">Made by dummer! 🎮</div>
+  </div>
+
+  <script>
+    // Get name from URL or storage
+    function getPlayerName() {
+      // Check URL first
+      const urlParams = new URLSearchParams(window.location.search);
+      const urlName = urlParams.get('name');
+      
+      // Then check localStorage
+      const storedName = localStorage.getItem('playerName');
+      
+      // Return whichever exists, preferring URL
+      return urlName || storedName || '';
+    }
+
+    // Update page with player name
+    function updateWelcomeText() {
+      const name = getPlayerName();
+      const welcomeHeading = document.getElementById('welcomeHeading');
+      
+      if (name) {
+        welcomeHeading.textContent = `Choose Truth or Dare, ${name}!`;
+        // Store name for other pages if it came from URL
+        if (!localStorage.getItem('playerName')) {
+          localStorage.setItem('playerName', name);
+        }
+      }
+    }
+
+    // Fix for buttons not working (ensure DOM is loaded)
+    document.addEventListener('DOMContentLoaded', function() {
+      // Update the welcome text
+      updateWelcomeText();
+      
+      // Add click event listeners for debugging
+      document.querySelectorAll('.game-choice-btn').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+          console.log(`Clicked: ${e.target.textContent}`);
+          // Let the default link behavior happen
+        });
+      });
+      
+      // Fallback in case links still don't work
+      document.getElementById('truthFallback').addEventListener('click', function() {
+        window.location.href = 'truth.html';
+      });
+      document.getElementById('dareFallback').addEventListener('click', function() {
+        window.location.href = 'dare.html';
+      });
+    });
+
+    // Fallback navigation function
+    function navigateTo(page) {
+      window.location.href = page;
+    }
+  </script>
+
+  <!-- Hidden fallback buttons (in case primary links fail) -->
+  <button id="truthFallback" style="display:none;">Truth Fallback</button>
+  <button id="dareFallback" style="display:none;">Dare Fallback</button>
+</body>
+</html>

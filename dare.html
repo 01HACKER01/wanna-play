@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dare Challenge</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <script type="module" src="js/firebase.js"></script>
+  <style>
+    /* Instagram button styling */
+    .instagram-btn {
+      padding: 15px 30px;
+      font-size: 1.2rem;
+      margin: 30px auto;
+      display: block;
+      background: linear-gradient(45deg, 
+        #f09433 0%, 
+        #e6683c 25%, 
+        #dc2743 50%, 
+        #cc2366 75%, 
+        #bc1888 100%);
+      color: white;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: transform 0.3s;
+      text-decoration: none;
+      text-align: center;
+      width: fit-content;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    .instagram-btn:hover {
+      transform: scale(1.05);
+    }
+    .button-container {
+      text-align: center;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Your Dare! 😈</h1>
+  
+  <div class="game-content">
+    <div id="dareText"></div>
+  </div>
+
+  <div class="button-container">
+    <a href="https://www.instagram.com/dummer_liebhaber" 
+       class="btn instagram-btn" 
+       id="instagramBtn"
+       target="_blank">
+      Do The Dare
+    </a>
+  </div>
+
+  <div class="footer">
+    <div class="footer-text">Made by dummer! 🎮</div>
+  </div>
+
+  <script type="module">
+    import { dares } from './js/game-data.js';
+    import { trackGameEvent } from './js/firebase.js';
+
+    // Get random dare
+    function getRandomDare() {
+      return dares[Math.floor(Math.random() * dares.length)];
+    }
+
+    // Initialize the page
+    document.addEventListener('DOMContentLoaded', function() {
+      const dare = getRandomDare();
+      const dareElement = document.getElementById('dareText');
+      
+      // Display dare
+      dareElement.textContent = dare;
+      
+      // Track dare view
+      trackGameEvent({
+        type: 'challenge_viewed',
+        challengeType: 'dare',
+        challengeText: dare,
+        timestamp: new Date().toISOString()
+      });
+      
+      // Instagram button click handler
+      document.getElementById('instagramBtn').addEventListener('click', function() {
+        trackGameEvent({
+          type: 'instagram_contact',
+          challengeType: 'dare',
+          challengeText: dare,
+          action: 'message_sent',
+          timestamp: new Date().toISOString()
+        });
+        
+        // Small delay to ensure event is tracked before navigation
+        setTimeout(() => {
+          window.open(this.href, '_blank');
+        }, 200);
+      });
+    });
+  </script>
+</body>
+</html>
