@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Choose Game - Truth or Dare</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <script type="module" src="js/firebase.js" defer></script>
+  <script type="module" src="js/game-logic.js" defer></script>
+</head>
+<body>
+  <h1 id="welcomeHeading">Choose Truth or Dare!</h1>
+  <p>Let's have some fun together!</p>
+  
+  <div class="button-group">
+    <button class="btn btn-game" id="truthBtn">Truth</button>
+    <button class="btn btn-game" id="dareBtn">Dare</button>
+  </div>
+
+  <div class="footer">
+    <div class="footer-text">Made by dummer! 🎮</div>
+  </div>
+
+  <script type="module">
+    import { getNameFromURL, initWelcomePage } from './js/game-logic.js';
+    import { logEvent } from './js/firebase.js';
+    
+    // Initialize page
+    initWelcomePage();
+    
+    // Game selection
+    document.getElementById('truthBtn').addEventListener('click', () => {
+      logEvent('game_selected', { gameType: 'truth' });
+      window.location.href = 'truth.html';
+    });
+    
+    document.getElementById('dareBtn').addEventListener('click', () => {
+      logEvent('game_selected', { gameType: 'dare' });
+      window.location.href = 'dare.html';
+    });
+  </script>
+</body>
+</html>

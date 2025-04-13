@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Truth Challenge</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <script type="module" src="js/firebase.js" defer></script>
+  <script type="module" src="js/game-logic.js" defer></script>
+</head>
+<body>
+  <h1>Truth Challenge!</h1>
+  
+  <div class="game-content">
+    <div id="truth"></div>
+  </div>
+
+  <div class="button-group">
+    <button class="btn btn-primary" id="newTruthBtn">New Truth</button>
+    <a href="welcome.html" class="btn btn-game">Back to Menu</a>
+  </div>
+
+  <div class="footer">
+    <div class="footer-text">Made by dummer! 🎮</div>
+  </div>
+
+  <script type="module">
+    import { initTruthGame } from './js/game-logic.js';
+    import { logEvent } from './js/firebase.js';
+    
+    // Initialize game
+    initTruthGame();
+    logEvent('game_started', { gameType: 'truth' });
+  </script>
+</body>
+</html>
